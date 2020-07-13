@@ -1,0 +1,14 @@
+<div class="media text-muted pt-3">
+    {% set splittedFullName = post.user.fullName|split(' ') %}
+    {% set initials = attribute(splittedFullName, 0)|first ~ attribute(splittedFullName, 1)|default('')|first %}
+    <img data-src="holder.js/32x32?text={{ initials }}&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
+    <p class="media-body pb-3 mb-0 small lh-125">
+        <span class="d-block">
+            <a href="{{ path('micro_post_user', {'username' : post.user.username}) }}">
+                <strong class="text-gray-dark">@{{ post.user.username }}</strong>
+            </a>
+            <small>· {{ post.time|date("d/m/Y") }}</small>
+        </span>
+        <a href="{{ path('micro_post_post', { 'id' : post.id }) }}">{{ post.text }}</a>
+    </p>
+</div>
