@@ -32,6 +32,10 @@ services:
             arguments:
                 $version: '%version%'
 
+    App\EventListener\LikeNotificationSubscriber:
+        tags:
+            - { name : doctrine.event_subscriber, connection : default }
+
     ### if autowire was set to false, the services should be declared here in this file like below:
     # App\Controller\BlogController: ['@App\Service\Greeting']
 

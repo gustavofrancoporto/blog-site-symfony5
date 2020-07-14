@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -65,17 +66,22 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MicroPost", mappedBy="user")
+     * @ORM\OneToMany(targetEntity=MicroPost::class, mappedBy="user")
      */
     private $posts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="followings")
+     * @ORM\ManyToMany(targetEntity=MicroPost::class, mappedBy="likedBy")
+     */
+    private $postsLiked;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="followings")
      */
     private $followers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="followers")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="followers")
      * @ORM\JoinTable(name="following",
      *     joinColumns={
      *          @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -87,11 +93,18 @@ class User implements UserInterface, \Serializable
      */
     private $followings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->postsLiked = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->followings = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,21 +177,27 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getPosts(): ArrayCollection
+    public function getPosts(): Collection
     {
         return $this->posts;
     }
 
-    public function getFollowers(): ArrayCollection
+    public function getFollowers(): Collection
     {
         return $this->followers;
     }
 
-    public function getFollowings(): ArrayCollection
+    public function getFollowings(): Collection
     {
         return $this->followings;
     }
 
+    public function follow(User $user)
+    {
+        if (!$this->getFollowings()->contains($user)) {
+            $this->getFollowings()->add($user);
+        }
+    }
 
     public function getRoles()
     {
@@ -203,5 +222,36 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized)
     {
         list($this->id, $this->username, $this->password) = unserialize($serialized);
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

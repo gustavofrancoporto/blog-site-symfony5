@@ -36,6 +36,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findAllWithPosts()
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.posts', 'mp')
+            ->groupBy('u')
+            ->having('count(mp) > 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllWithPostsExceptUser(User $user)
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.posts', 'mp')
+            ->groupBy('u')
+            ->having('count(mp) > 0')
+            ->andHaving('u != :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

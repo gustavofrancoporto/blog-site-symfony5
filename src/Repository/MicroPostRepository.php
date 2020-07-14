@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\MicroPost;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +20,16 @@ class MicroPostRepository extends ServiceEntityRepository
         parent::__construct($registry, MicroPost::class);
     }
 
-    // /**
-    //  * @return MicroPost[] Returns an array of MicroPost objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllByUsers(Collection $users)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user in (:followings)')
+            ->setParameter('followings', $users)
+            ->orderBy('p.time', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?MicroPost
