@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="menu.signin">
+                <source>Sign in</source>
+                <target>Entrar</target>
+            </trans-unit>
+            <trans-unit id="menu.signout">
+                <source>Sign out</source>
+                <target>Sair</target>
+            </trans-unit>
+            <trans-unit id="menu.notifications">
+                <source>Notifications</source>
+                <target>Notificações</target>
+            </trans-unit>
+            <trans-unit id="menu.add">
+                <source>Add new</source>
+                <target>Novo</target>
+            </trans-unit>
+            <trans-unit id="post.recent">
+                <source>Recent updates</source>
+                <target>Atualizações Recentes</target>
+            </trans-unit>
+
+            <trans-unit id="register.terms">
+                <source>I agree to the terms of service</source>
+                <target>Eu aceito os termos de serviço</target>
+            </trans-unit>
+
+            <trans-unit id="register.username">
+                <source>Username</source>
+                <target>Nome de Usuário</target>
+            </trans-unit>
+            <trans-unit id="register.password">
+                <source>Password</source>
+                <target>Senha</target>
+            </trans-unit>
+            <trans-unit id="register.repeated_password">
+                <source>Repeated password</source>
+                <target>Repetir Senha</target>
+            </trans-unit>
+            <trans-unit id="register.full_name">
+                <source>Full name</source>
+                <target>Nome Completo</target>
+            </trans-unit>
+            <trans-unit id="register.register">
+                <source>Register</source>
+                <target>Registrar</target>
+            </trans-unit>
+
+            <trans-unit id="notifications.none">
+                <source>You have no notifications</source>
+                <target>Você não tem notificações</target>
+            </trans-unit>
+
+            <trans-unit id="email.registration">
+                <source>email.registration</source>
+                <target><![CDATA[<h3>Bom vindo!</h3>
+<p>Olá %name%! Você está inscrito no site!</p>
+<p>Favor confirmar seu cadastro clicando no link:
+<a href="%confirm-link%">lien</a>.
+</p>
+<p>Para se conectar, acesse a <a href="%login-link%">página de login</a>.</p>
+<p>Obrigado!</p>]]></target>
+            </trans-unit>
+
+<!--
+            <trans-unit id="user.followers">
+                <source>Followers</source>
+                <target>{0} Nenhum seguidor|{1} Seguidor|]1,Inf[ %count% Seguidores</target>
+            </trans-unit>
+
+            <trans-unit id="user.following">
+                <source>Following</source>
+                <target>{0} Seguindo ninguém|]0,Inf[ Seguindo %count%</target>
+            </trans-unit>
+-->
+
+            <trans-unit id="user.followers">
+                <source>Followers</source>
+                <target>{count, plural, =0 { Nenhum seguidor } one { Seguidor } other { # Seguidores } }</target>
+            </trans-unit>
+
+            <trans-unit id="user.following">
+                <source>Following</source>
+                <target>{count, plural, =0 { Seguindo ninguém } other { Seguindo # } }</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

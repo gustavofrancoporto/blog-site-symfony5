@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     version: 1.5.2
+    email_from: '%env(MAILER_FROM)%'
 
 services:
     # default configuration for services in *this* file
@@ -35,6 +36,22 @@ services:
     App\EventListener\LikeNotificationSubscriber:
         tags:
             - { name : doctrine.event_subscriber, connection : default }
+
+    App\Mailer\Mailer:
+        arguments:
+            $mailFrom: '%email_from%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+        arguments:
+            - '%env(DATABASE_URL)%'
+
+    App\Event\UserSubscriber:
+        arguments:
+            $defaultLocale : '%kernel.default_locale%'
+
+    App\Event\LocaleSubscriber:
+        arguments:
+            - '%kernel.default_locale%'
 
     ### if autowire was set to false, the services should be declared here in this file like below:
     # App\Controller\BlogController: ['@App\Service\Greeting']

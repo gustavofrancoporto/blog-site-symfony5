@@ -98,6 +98,21 @@ class User implements UserInterface, \Serializable
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="string", nullable=true, length=30)
+     */
+    private $confirmationToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled;
+
+    /**
+     * @ORM\OneToOne(targetEntity=UserPreferences::class, cascade={"persist"})
+     */
+    private $preferences;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -105,6 +120,8 @@ class User implements UserInterface, \Serializable
         $this->followers = new ArrayCollection();
         $this->followings = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->roles = [self::ROLE_USER];
+        $this->enabled = false;
     }
 
     public function getId(): ?int
@@ -202,6 +219,46 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken($confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return UserPreferences
+     */
+    public function getPreferences(): UserPreferences
+    {
+        return $this->preferences;
+    }
+
+    /**
+     * @param UserPreferences $preferences
+     */
+    public function setPreferences($preferences): void
+    {
+        $this->preferences = $preferences;
     }
 
     public function getSalt()

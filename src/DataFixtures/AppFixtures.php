@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\MicroPost;
 use App\Entity\User;
+use App\Entity\UserPreferences;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -45,6 +46,11 @@ class AppFixtures extends Fixture
         'The later kings of Númenor practiced or allowed slavery when they began conquering lands in Middle-earth. But that tradition was associated with darkness and the fallen nature of the Kings Men.'
     ];
 
+    private const LANGUAGES = [
+        'en',
+        'pt_br'
+    ];
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -64,15 +70,21 @@ class AppFixtures extends Fixture
     public function loadUsers(ObjectManager $manager)
     {
         foreach (self::USERS as $userData) {
+            $preference = new UserPreferences();
+            $preference->setLocale(self::LANGUAGES[rand(0, 1)]);
+
             $user = new User();
             $user->setUsername($userData['username'])
                 ->setFullName($userData['fullName'])
                 ->setEmail($userData['email'])
                 ->setPassword($this->passwordEncoder->encodePassword($user, $userData['password']))
-                ->setRoles($userData['roles']);
+                ->setRoles($userData['roles'])
+                ->setEnabled(true)
+                ->setPreferences($preference);
 
             $this->addReference($userData['username'], $user);
 
+//            $manager->persist($preference);
             $manager->persist($user);
             $manager->flush();
         }

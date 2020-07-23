@@ -28,7 +28,9 @@
     <div class="card-group py-2">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Followers</h5>
+                <h5 class="card-title">
+                    {{ 'Followers'|trans( { 'count' : user.followers|length } ) }}
+                </h5>
                 <ul class="list-group list-group-flush">
                     {% for follower in user.followers %}
                         <li class="list-group-item">
@@ -42,7 +44,9 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Followings</h5>
+                <h5 class="card-title">
+                    {{ 'Following'|trans( { 'count' : user.followings|length } ) }}
+                </h5>
                 <ul class="list-group list-group-flush">
                     {% for following in user.followings %}
                         <li class="list-group-item">
