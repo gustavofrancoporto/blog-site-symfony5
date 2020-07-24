@@ -1,5 +1,5 @@
 {{ 'email.registration'|trans({
-    '%name%' : user.fullname,
-    '%confirm-link%' : url('security_confirm', { 'token' : user.confirmationToken }),
-    '%login-link%' : url('security_login')
+    'name' : user.fullname,
+    'confirm_link' : url('security_confirm', { 'token' : user.confirmationToken }),
+    'login_link' : url('security_login')
 })|raw }}

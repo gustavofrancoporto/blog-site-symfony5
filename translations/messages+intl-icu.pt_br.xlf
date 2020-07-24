@@ -57,11 +57,11 @@
             <trans-unit id="email.registration">
                 <source>email.registration</source>
                 <target><![CDATA[<h3>Bom vindo!</h3>
-<p>Olá %name%! Você está inscrito no site!</p>
+<p>Olá {name}! Você está inscrito no site!</p>
 <p>Favor confirmar seu cadastro clicando no link:
-<a href="%confirm-link%">lien</a>.
+<a href="{confirm_link}">lien</a>.
 </p>
-<p>Para se conectar, acesse a <a href="%login-link%">página de login</a>.</p>
+<p>Para se conectar, acesse a <a href="{login_link}">página de login</a>.</p>
 <p>Obrigado!</p>]]></target>
             </trans-unit>
 
