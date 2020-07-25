@@ -1,5 +1,5 @@
 # Remove symlink
-sudo rm -R /var/www/blogsite_old && \
+sudo rm -fR /var/www/blogsite_old && \
 sudo cp -R /var/www/blogsite_current /var/www/blogsite_old/ && \
 sudo rm /var/www/blogsite && \
 sudo rm -R /var/www/blogsite_current && \

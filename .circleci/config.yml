@@ -61,6 +61,9 @@ jobs:
           name: Yarn
           command: yarn install && yarn run encore production
       - run:
+          name: Logging variables
+          command: echo $DROPLET_IP && echo $DROPLET_USER
+      - run:
           name: Add droplet
           command: ssh-keyscan -H 164.90.221.197 >> ~/.ssh/known_hosts
       - run:
