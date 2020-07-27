@@ -71,7 +71,7 @@ jobs:
           command: sudo apt install rsync
       - run:
           name: Deploy code
-          command: rsync -vzcrSLhp --exclude '.env' --delete ~/blogsite/ $DROPLET_USER:$DROPLET_IP:/var/www/blogsite_current
+          command: rsync -vzcrSLhp --exclude '.env' --delete ~/blogsite/ root@164.90.221.197:/var/www/blogsite_current
       - run:
           name: Post deploy
           command: ssh -T root@164.90.221.197 < bin/deploy/deploy.sh
