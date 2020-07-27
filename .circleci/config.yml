@@ -64,14 +64,14 @@ jobs:
           name: Add droplet
           command: ssh-keyscan -H 164.90.221.197 >> ~/.ssh/known_hosts
       - run:
-          name: Pre-deploy
-          command: ssh -T root@164.90.221.197 < bin/deploy/pre_deploy.sh
-      - run:
           name: Install RSYNC
           command: sudo apt install rsync
       - run:
+          name: Pre-deploy
+          command: ssh -T root@164.90.221.197 < bin/deploy/pre_deploy.sh
+      - run:
           name: Deploy code
-          command: rsync -vzcrSLhp --exclude '.env' --delete ~/blogsite/ root@164.90.221.197:/var/www/blogsite_current
+          command: rsync -vzcrSLhp --exclude='.env' --delete ~/blogsite/ root@164.90.221.197:/var/www/blogsite_current
       - run:
           name: Post deploy
           command: ssh -T root@164.90.221.197 < bin/deploy/deploy.sh
