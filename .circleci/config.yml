@@ -61,17 +61,17 @@ jobs:
           name: Yarn
           command: yarn install && yarn run encore production
       - run:
-          name: Logging variables
-          command: echo $DROPLET_IP && echo $DROPLET_USER
-      - run:
           name: Add droplet
           command: ssh-keyscan -H 164.90.221.197 >> ~/.ssh/known_hosts
       - run:
           name: Pre-deploy
           command: ssh -T root@164.90.221.197 < bin/deploy/pre_deploy.sh
       - run:
+          name: Install RSYNC
+          command: sudo apt install rsync
+      - run:
           name: Deploy code
-          command: rsync -vzcrSLhp --rsync-path=/usr/bin/rsync --exclude '.env' --delete ~/blogsite/ $DROPLET_USER:$DROPLET_IP:/var/www/blogsite_current
+          command: rsync -vzcrSLhp --exclude '.env' --delete ~/blogsite/ $DROPLET_USER:$DROPLET_IP:/var/www/blogsite_current
       - run:
           name: Post deploy
           command: ssh -T root@164.90.221.197 < bin/deploy/deploy.sh
